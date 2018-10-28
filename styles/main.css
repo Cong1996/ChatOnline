@@ -224,7 +224,8 @@ body{
 	max-height: 60vh;
 	padding: 1vh 1vmax;
 	box-sizing: border-box;
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x:hidden;
 }
 .message{
 	font-size:0;
@@ -251,14 +252,15 @@ body{
 .sender-photo>div>img{
 	height: 50px;
 }
+
 .sender-other{
 	padding:0 1vmax;
 	max-width: 70%;
 }
 .sender-name{
-	display: inline;
-	width:100px;z
-	word-wrap:nowrap;
+	width:100px;
+	white-space:nowrap;
+	word-break: all;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -279,6 +281,9 @@ body{
 .sender-other  img{
 	display: block;
 	width: 100px;
+}
+.your .sender-other  img{
+	text-align: right;
 }
 .others .single-message::before{
 	position: absolute;
@@ -438,6 +443,11 @@ textarea{
 	.chat-window-footer{
 		height: 20vh;
 
+	}
+	.message-show-container{
+		padding-top: 5vh;
+		height: 75vh;
+		max-height: 75vh;
 	}
 	textarea{
 		background: transparent;

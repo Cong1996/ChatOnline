@@ -30,6 +30,7 @@ CongChat.prototype={
 			emojiArray.forEach(function(item,index){
 				let div=document.createElement('div'),
 					img=document.createElement('img');
+				div.classList.add('emojiContainerDiv');
 				img.src="./images/chat-tool/emoji/"+item;
 				img.title=item.split('.')[0];
 				div.appendChild(img);
@@ -55,6 +56,7 @@ CongChat.prototype={
 							</div>`;
 			document.getElementById('messageList').appendChild(li);
 			that.showUserListInit(users);
+			that.scrollToDown(document.getElementById('messageShowContainer'));
 			});
 
 			that.socket.on('someoneLogin',function(nickname,users){//提示当前用户谁加入聊天
@@ -64,6 +66,7 @@ CongChat.prototype={
 								</div>`;
 				document.getElementById('messageList').appendChild(li);
 				that.showUserListInit(users);
+				that.scrollToDown(document.getElementById('messageShowContainer'));
 			});
 
 			that.socket.on('someoneSendMessage',function(nickname,message){//接受信息
@@ -83,7 +86,7 @@ CongChat.prototype={
 				that.scrollToDown(document.getElementById('messageShowContainer'));
 			});
 
-			that.socket.on('someoneSendEmoji',function(nickname,imgSrc,imgName){//接受表情包
+			that.socket.on('someoneSendEmoji',function(nickname,imgSrc){//接受表情包
 				let li=document.createElement('div');
 				li.innerHTML=`<div class="message others">
 									<div class="sender-photo">
@@ -144,8 +147,9 @@ CongChat.prototype={
 		document.getElementById('emojiArea').addEventListener('click',function(event){//发送表情包
 			var e=event||window.event;
 			let target=e.target;
+
 			if(target.tagName.toLowerCase()=='img'){
-				that.socket.emit('sendEmoji',target.src,target.title);
+				that.socket.emit('sendEmoji',target.src);
 				let li=document.createElement('div');
 				li.innerHTML=`<div class="message your">								
 									<div class="sender-other">
@@ -162,6 +166,27 @@ CongChat.prototype={
 				document.getElementById('emojiArea').classList.remove('emoji-area-show');
 				that.scrollToDown(document.getElementById('messageShowContainer'));
 			}
+			else if (target.tagName.toLowerCase()=='div'&&target.classList.contains('emojiContainerDiv')){
+				that.socket.emit('sendEmoji',target.getElementsByTagName('img')[0].src);
+				let li=document.createElement('div');
+				li.innerHTML=`<div class="message your">								
+									<div class="sender-other">
+										<div class="sender-name">${that.nickname}</div>
+										<img src="${target.getElementsByTagName('img')[0].src}"/>
+									</div>
+									<div class="sender-photo">
+										<div>
+											<img src="./images/亚索2.png" />
+										</div>
+									</div>
+					</div>`;
+				document.getElementById('messageList').appendChild(li);
+				document.getElementById('emojiArea').classList.remove('emoji-area-show');
+				that.scrollToDown(document.getElementById('messageShowContainer'));
+			}
+			else{
+
+			}
 		});
 	},
 	showUserListInit(users){
@@ -169,7 +194,7 @@ CongChat.prototype={
 			htmlStr="";
 		users.forEach(function(item,index){
 			htmlStr=htmlStr+`<li>
-								<img src="./images/timg.jpg" width="50px" height="50px">
+								<img src="./images/亚索.png"  height="50px">
 								<span>${item}</span>
 							</li>`;
 		});
@@ -177,9 +202,6 @@ CongChat.prototype={
 		document.getElementById('userNumber').innerText=users.length;
 	},
 	scrollToDown(dom){
-		dom.scrollTop+=dom.scrollHeight;
-		console.log(dom.scrollTop+" "+dom.scrollHeight);
-		
-	
+		dom.scrollTop+=dom.scrollHeight;	
 	}
 }

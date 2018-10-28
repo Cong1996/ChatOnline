@@ -50,7 +50,7 @@ io.on('connection', function(socket) {
     socket.on('sendMessage',function(message){//发送消息
     	socket.broadcast.emit('someoneSendMessage',socket.nickname,message);
     });
-    socket.on('sendEmoji',function(imgSrc,imgName){//发送表情包
-    	socket.broadcast.emit('someoneSendEmoji',socket.nickname,imgSrc,imgName);
+    socket.on('sendEmoji',function(imgSrc){//发送表情包
+    	socket.broadcast.emit('someoneSendEmoji',socket.nickname,imgSrc);
     });
 });
