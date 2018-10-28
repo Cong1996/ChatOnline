@@ -13,6 +13,11 @@ CongChat.prototype={
 			this.users=[];
 			this.nickname='';
 			this.green=245;
+			//头像预加载
+		let img1=document.createElement('img'),
+			img2=document.createElement('img');
+			img1.src="./images/亚索.png";
+			img2.src="./images/亚索2.png";
 		loginArea.classList.add('login-area-appear');
 		this.socket=io.connect('http://localhost:8833/');
 		this.socket.on('connect',function(){		
@@ -26,16 +31,7 @@ CongChat.prototype={
 			infoMessage.innerText="用户名已存在";
 		});
 		this.socket.on('loginSuccess',function(usersList,emojiArray){
-			let emojiArea=document.getElementById('emojiArea');
-			emojiArray.forEach(function(item,index){
-				let div=document.createElement('div'),
-					img=document.createElement('img');
-				div.classList.add('emojiContainerDiv');
-				img.src="./images/chat-tool/emoji/"+item;
-				img.title=item.split('.')[0];
-				div.appendChild(img);
-				emojiArea.appendChild(div);
-			});//获取表情包
+			
 			infoMessage.classList.remove('error');
 			infoMessage.classList.add('success');
 			infoMessage.innerText="正在进入聊天.....";
@@ -46,9 +42,19 @@ CongChat.prototype={
 			document.getElementById('chatArea').classList.add('chat-area-show');
 			setTimeout(function(){
 				loginArea.style.display="none";
+				let emojiArea=document.getElementById('emojiArea');
+				emojiArray.forEach(function(item,index){
+					let div=document.createElement('div'),
+						img=document.createElement('img');
+					div.classList.add('emojiContainerDiv');
+					img.src="./images/chat-tool/emoji/"+item;
+					img.title=item.split('.')[0];
+					div.appendChild(img);
+					emojiArea.appendChild(div);
+				});//获取表情包
 			},1000);
 
-
+			
 			that.socket.on('someoneLogout',function(nickname,users,type){//提示当前用户某些用户下线
 			let li=document.createElement('div');
 			li.innerHTML=`<div class="other-enter">
