@@ -6,19 +6,20 @@ var express = require('express'),
     emojiArray=[],
     io = require('socket.io').listen(server); //引入socket.io模块并绑定到服务器
 app.use('/', express.static(__dirname));
-app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1')
-    res.header("Content-Type", "application/json;charset=utf-8");
-    next();
-});
+// app.all('*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+//     res.header("X-Powered-By",' 3.2.1')
+//     res.header("Content-Type", "application/json;charset=utf-8");
+//     next();
+// });
 server.listen(8833);
 const files=fs.readdirSync(__dirname+'/images/chat-tool/emoji');
 files.forEach(function(item,index){
 	emojiArray.push(item);//获取表情包路径
 });
+
 //socket部分
 io.on('connection', function(socket) {
     //接收并处理客户端发送的foo事件

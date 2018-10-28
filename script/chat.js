@@ -98,7 +98,6 @@ CongChat.prototype={
 								</div>`;
 				document.getElementById('messageList').appendChild(li);
 				that.scrollToDown(document.getElementById('messageShowContainer'));
-				that.emojiFunction(imgName);
 			});
 		});
 		
@@ -177,35 +176,10 @@ CongChat.prototype={
 		userList.innerHTML=htmlStr;
 		document.getElementById('userNumber').innerText=users.length;
 	},
-	emojiFunction(imgName){
-		console.log(imgName);
-		switch(imgName){
-			case '帅':
-				document.getElementById('sendMessageContent').value="对！你真帅！";
-				break;
-			case '旋转':
-				document.getElementById('chatWindow').classList.add('chat-window-rotate');
-				setTimeout(function(){
-					document.getElementById('chatWindow').classList.remove('chat-window-rotate');
-				},1000);
-				break;
-			case '变绿':
-				if(this.green>=5)
-				{
-					this.green-=5;
-					document.getElementById('chatWindowBody').style=`background:rgba(${this.green},245,${this.green},1)`;
-				}
-				break;
-		}
-	},
 	scrollToDown(dom){
-		// dom.scrollTop+=dom.scrollHeight;
-		// console.log(dom.scrollTop+" "+dom.scrollHeight);
-		let i=0;
-		while(i<dom.scrollHeight){
-			dom.scrollTop+=1;
-			i++;
-		}
+		dom.scrollTop+=dom.scrollHeight;
+		console.log(dom.scrollTop+" "+dom.scrollHeight);
+		
 	
 	}
 }

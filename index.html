@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="./styles/main.css"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<script src="./script/socket.io.js"></script>
 </head>
 <body>
@@ -48,7 +49,7 @@
 		</div>
 		<div id="loginArea" class="login-area">
 			<div class="input-area">
-				输入你的<i>昵</i>&nbsp;<i>称</i>：<input id="nicknameInput" type="text" placeholder="昵称" />
+				<input id="nicknameInput" type="text" placeholder="你的昵称" autofocus/>
 				<button id="joinChat">加入群聊！</button>
 			</div>
 			<div id="infoMessage" class="info error">
