@@ -125,33 +125,16 @@ CongChat.prototype={
 			}
 		},false);
 		document.getElementById('sendMessageButton').addEventListener('click',function(){//发送信息
-			let message=document.getElementById('sendMessageContent').value.trim();
-			if(message!=''){
-				document.getElementById('sendMessageContent').value="";
-				let li=document.createElement('div');
-				that.socket.emit('sendMessage',message);
-				li.innerHTML=`<div class="message your">								
-									<div class="sender-other">
-										<div class="sender-name">${that.nickname}</div>
-										<div class="single-message">${message}</div>
-									</div>
-									<div class="sender-photo">
-										<div>
-											<img src="./images/亚索2.png" />
-										</div>
-									</div>
-					</div>`;
-				document.getElementById('messageList').appendChild(li);
-				document.getElementById('sendMessageContent').focus();
-				that.scrollToDown(document.getElementById('messageShowContainer'));
-				
-			}
-			else{
-				alert('消息发送不能为空');
-			}
+			that.sendMessage();
 		},false);
+		document.onkeydown=function(event){
+			let e=event||window.event;
+			if(e.ctrlKey&&e.keyCode==13){
+				that.sendMessage();
+			}
+		};
 		document.getElementById('emojiArea').addEventListener('click',function(event){//发送表情包
-			var e=event||window.event;
+			let e=event||window.event;
 			let target=e.target;
 
 			if(target.tagName.toLowerCase()=='img'){
@@ -209,5 +192,31 @@ CongChat.prototype={
 	},
 	scrollToDown(dom){
 		dom.scrollTop+=dom.scrollHeight;	
+	},
+	sendMessage(){//发送消息
+		let message=document.getElementById('sendMessageContent').value.trim();
+			if(message!=''){
+				document.getElementById('sendMessageContent').value="";
+				let li=document.createElement('div');
+				this.socket.emit('sendMessage',message);
+				li.innerHTML=`<div class="message your">								
+									<div class="sender-other">
+										<div class="sender-name">${this.nickname}</div>
+										<div class="single-message">${message}</div>
+									</div>
+									<div class="sender-photo">
+										<div>
+											<img src="./images/亚索2.png" />
+										</div>
+									</div>
+					</div>`;
+				document.getElementById('messageList').appendChild(li);
+				document.getElementById('sendMessageContent').focus();
+				this.scrollToDown(document.getElementById('messageShowContainer'));
+				
+			}
+			else{
+				alert('消息发送不能为空');
+			}
 	}
 }
