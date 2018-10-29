@@ -15,28 +15,33 @@ CongChat.prototype={
 			this.green=245;
 			//头像预加载
 		let img1=document.createElement('img'),
-			img2=document.createElement('img');
+			img2=document.createElement('img'),
+			img3=document.createElement('img');
 			img1.src="./images/亚索.png";
 			img2.src="./images/亚索2.png";
+			img3.src="./images/timg.jpg";
 		loginArea.classList.add('login-area-appear');
-		this.socket=io.connect('http://localhost:8833/');
+		this.socket=io.connect('http://112.74.33.129:8833/');
 		this.socket.on('connect',function(){		
 			infoMessage.classList.remove('error');
 			infoMessage.classList.add('success');
 			infoMessage.innerText="";
+			if(localStorage.congChatNickname){
+				document.getElementById('nicknameInput').value=localStorage.congChatNickname;
+			}
 		});
 		this.socket.on('nickExisted',function(){
 			infoMessage.classList.remove('success');
 			infoMessage.classList.add('error');
 			infoMessage.innerText="用户名已存在";
 		});
-		this.socket.on('loginSuccess',function(usersList,emojiArray){
-			
+		this.socket.on('loginSuccess',function(usersList,emojiArray){			
 			infoMessage.classList.remove('error');
 			infoMessage.classList.add('success');
 			infoMessage.innerText="正在进入聊天.....";
 			that.users=usersList;
 			that.nickname=document.getElementById('nicknameInput').value.trim();
+			localStorage.setItem('congChatNickname',that.nickname);
 			that.showUserListInit(usersList,document.getElementById('nicknameInput').value.trim());
 			loginArea.classList.remove('login-area-appear');
 			document.getElementById('chatArea').classList.add('chat-area-show');
@@ -183,7 +188,7 @@ CongChat.prototype={
 			htmlStr="";
 		users.forEach(function(item,index){
 			htmlStr=htmlStr+`<li>
-								<img src="./images/亚索.png"  height="50px">
+								<img src="./images/timg.jpg"  height="50px">
 								<span>${item}</span>
 							</li>`;
 		});

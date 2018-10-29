@@ -374,6 +374,7 @@ body{
 	height: 70px;
 	cursor:pointer;
 	transition: .3s all ease-in-out;
+	cursor:pointer;
 }
 .emoji-area>div:hover{
 	background-color: #eee;
@@ -411,6 +412,7 @@ textarea{
 	transition: .1s all ease-in-out;
 	border-radius: .2rem;
 	outline:none;
+	cursor:pointer;
 }
 .enter-area>button:hover{
 	background-color:rgb(18,150,17);
@@ -457,5 +459,8 @@ textarea{
 	}
 	.enter-area>button{
 		bottom:0;
+	}
+	.enter-area>button>i{
+		display: none;
 	}
 }
