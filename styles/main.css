@@ -21,16 +21,15 @@ body{
 }
 .login-area{
 	position: absolute;
-	top:100%;
+	top:100vh;
 	left:50%;
-	opacity: 1;
+	opacity: 0;
 	color:#fff;
 	font-size:1.5rem;
 	text-align: center;
 	font-weight: bold;
-	transform: translateY(100%) translateX(-50%);
-	transition: 1.2s all ease-in-out;
-
+	transform: translateY(0%) translateX(-50%);
+	transition: 1s all ease-in;
 }
 .login-area-appear{
 	top:50%!important;
@@ -45,9 +44,8 @@ body{
 	border-radius:.5rem;
 	text-align: center;
 	background-color:transparent;
-	height: 100%;
 	font-size:1.5rem;
-	vertical-align: middle;
+/*	vertical-align: middle;*/
 	outline: none;
 	transition: all .5s ease-in-out;
 }
@@ -288,12 +286,14 @@ body{
 }
 .others .single-message::before{
 	position: absolute;
-	content:"";
-	top:0;
+/*	content:"";*/
+	top:1rem;
 	left: -.5rem;
 	border-width: 1rem 1rem 1rem 0;
 	border-style: solid;
 	border-color:transparent rgba(255,255,255,1) transparent transparent;
+	transform: translateY(-50%);
+	box-sizing: border-box;
 }
 .your .single-message{
 	background: rgba(158,234,106,1);
@@ -301,12 +301,14 @@ body{
 }
 .your .single-message::before{
 	position: absolute;
-	content:"";
-	top:0;
+/*	content:"";*/
+	top:1rem;
 	right: -.5rem;
 	border-width: 1rem 0 1rem 1rem;
 	border-style: solid;
 	border-color:transparent  transparent transparent rgba(158,234,106,1);
+	transform: translateY(-50%);
+	box-sizing: border-box;
 }
 .other-enter{
 	text-align: center;
@@ -392,14 +394,17 @@ body{
 	height: 100px;
 	max-height: 25vh;
 }
-textarea{
+#sendMessageContent{
 	width: 100%;
 	height: 80%;
 	border:none;
 	font-size:1.2rem;
-	overflow:hidden;
+	overflow:auto;
 	outline:none;
 	resize:none;
+}
+#sendMessageContent>img{
+	width: 70px;
 }
 .enter-area>button{
 	position: absolute;
@@ -451,7 +456,7 @@ textarea{
 		height: 75vh;
 		max-height: 75vh;
 	}
-	textarea{
+	#sendMessageContent{
 		background: transparent;
 	}
 	.enter-area{
