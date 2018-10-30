@@ -21,7 +21,7 @@ CongChat.prototype={
 			img2.src="./images/亚索2.png";
 			img3.src="./images/timg.jpg";
 		loginArea.classList.add('login-area-appear');
-		this.socket=io.connect('http://112.74.33.129:8833/');
+		this.socket=io.connect('http://localhost:8833/');
 		this.socket.on('connect',function(){		
 			infoMessage.classList.remove('error');
 			infoMessage.classList.add('success');
@@ -108,7 +108,7 @@ CongChat.prototype={
 									</div>
 									<div class="sender-other">
 										<div class="sender-name">${nickname}</div>
-										<img src="${imgSrc}" draggable="false"/>
+										<img src="${imgSrc}" draggable="false" class="sendImage"/>
 									</div>
 								</div>`;
 				document.getElementById('messageList').appendChild(li);
@@ -130,9 +130,9 @@ CongChat.prototype={
 		document.getElementById('sendMessageButton').addEventListener('click',function(){//发送信息
 			that.sendMessage();
 		},false);
-		document.onkeydown=function(event){
+		document.onkeydown=function(event){//回车发送
 			let e=event||window.event;
-			if(e.ctrlKey&&e.keyCode==13){
+			if(e.keyCode==13){
 				that.sendMessage();
 			}
 		};
@@ -174,6 +174,13 @@ CongChat.prototype={
 				reader.readAsDataURL(file);	
 			}
 		});
+		document.getElementById('messageShowContainer').addEventListener('click',function(event){//放大图片
+			let e=event||window.event,
+				target=e.target;
+			if(target.classList.contains('sendImage')){
+				that.clickImage(target.src);
+			}
+		});
 	},
 	showUserListInit(users){
 		let userList=document.getElementById('userList'),
@@ -190,13 +197,13 @@ CongChat.prototype={
 	scrollToDown(dom){
 		dom.scrollTop+=dom.scrollHeight;	
 	},
-	sendEmoji(nickname,src){
+	sendEmoji(nickname,src){//发送表情包
 			this.socket.emit('sendEmoji',src);
 			let li=document.createElement('div');
 			li.innerHTML=`<div class="message your">								
 								<div class="sender-other">
 									<div class="sender-name">${nickname}</div>
-									<img src="${src}" draggable="false" />
+									<img src="${src}" draggable="false" class="sendImage"/>
 								</div>
 								<div class="sender-photo">
 									<div>
@@ -232,5 +239,12 @@ CongChat.prototype={
 			else{
 				alert('消息发送不能为空');
 			}
+	},
+	clickImage(src){//单击图片变大
+		document.getElementById('imageShowSrc').src=src;
+		document.getElementById('imageClickShowArea').classList.remove('disappear');
+		document.getElementById('imageClickShowArea').onclick=function(){
+			document.getElementById('imageClickShowArea').classList.add('disappear');
+		}
 	}
 }
